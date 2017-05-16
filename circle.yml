@@ -1,0 +1,18 @@
+---
+machine:
+  services:
+    - docker
+  timezone: America/Sao_Paulo
+test:
+  override:
+    - "echo \"Success\""
+deployment:
+  production:
+    branch: master
+    commands:
+      - "$(aws ecr get-login)"
+      - "docker build -t andremetzen/yii2-boilerplate:$(echo $CIRCLE_BRANCH | sed 's@/@-@') ."
+      - "docker push andremetzen/yii2-boilerplate:$(echo $CIRCLE_BRANCH | sed 's@/@-@')"
+      - "pip install baker requests"
+      - "chmod +x ./src/rancher/rancher.py"
+      - "./src/rancher/rancher.py upgrade ${RANCHER_SERVICE_ID} --complete_previous --start_first"
