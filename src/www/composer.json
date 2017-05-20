@@ -2,13 +2,15 @@
     "name": "yiisoft/yii2-boilerplate",
     "description": "Yii 2 Boilerplate",
     "type": "project",
+    "minimum-stability": "dev",
     "license": "BSD-3-Clause",
     "support": {},
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
-        "yiisoft/yii2-swiftmailer": "2.0.4"
+        "yiisoft/yii2-swiftmailer": "2.0.4",
+        "conceptho/yii2-service-layer": "0.1.2"
     },
     "require-dev": {
         "yiisoft/yii2-codeception": "*",

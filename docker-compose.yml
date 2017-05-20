@@ -19,16 +19,7 @@ services:
         - /srv/www
         - vhost:/runtime
         - ./src/www:/srv/www
-     environment:
-        - DEFAULT_HOST=yii2-boilerplate.docker
-        - ANPCONT_DOMAIN=yii2-boilerplate.docker
-        - DB_HOST=db
-        - DB_NAME=yii2-boilerplate
-        - DB_USER=root
-        - DB_PASS=root
-        - YII_DEBUG=true
-        - YII_ENV=dev
-        - TERM=xterm
+     env_file: env
   db:
      image: mysql
      command: --max_allowed_packet=512M

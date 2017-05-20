@@ -1,7 +1,5 @@
 <?php
 
-$params = require(__DIR__ . '/params.php');
-
 $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
@@ -45,8 +43,11 @@ $config = [
             ],
         ],
         */
+        'service' => [
+        	'class' => 'conceptho\ServiceLayer\Component',
+		]
     ],
-    'params' => $params,
+    'params' => require(__DIR__ . '/params.php'),
 ];
 
 if (YII_ENV_DEV) {
