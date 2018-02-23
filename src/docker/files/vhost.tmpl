@@ -1,12 +1,24 @@
-server {
-         server_name www.{DEFAULT_HOST} ;
-         return 301 $scheme://{DEFAULT_HOST}$request_uri ;
+map $http_user_agent $log_ua {
+        ~Pingdom 0;
+        ~Googlebot 0;
+        ~Baiduspider 0;
+        ~Amazon\ Route\ 53 0;
+        ~UptimeRobot 0;
+        ~HealthChecker 0;
+        ~ProjectShield 0;
+        default 1;
 }
 
+log_format timed_combined '$remote_addr - $remote_user [$time_local] '
+            '"$request" $status $body_bytes_sent '
+            '"$http_referer" "$http_user_agent" '
+            '$request_time $upstream_response_time $pipe';
+
 server {
-        server_name {DEFAULT_HOST};
         root /srv/www/web;
+        server_name {{ .Env.DEFAULT_HOST }}
         index index.html index.php;
+        access_log /dev/stdout timed_combined if=$log_ua;
 
         location = /favicon.ico {
                 log_not_found off;
@@ -41,7 +53,7 @@ server {
                 set_real_ip_from 0.0.0.0/0;
                 fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
                 fastcgi_intercept_errors on;
-                fastcgi_pass php:9000;
+                fastcgi_pass {{ or (.Env.PHP_HOST) "php" }}:9000;
                 fastcgi_read_timeout 600;
         }
 

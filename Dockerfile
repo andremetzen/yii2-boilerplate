@@ -1,5 +1,9 @@
+FROM jwilder/dockerize AS dockerize
+
 FROM andremetzen/alpine-php-fpm
 MAINTAINER Andre Metzen <metzen@conceptho.com>
+
+COPY --from=dockerize /usr/local/bin/dockerize /usr/local/bin
 
 RUN composer config -g github-oauth.github.com 75bb250d8aeedf8a5a4aede1d06da25dde75d77b
 RUN composer global require "fxp/composer-asset-plugin:~1.3.1"
@@ -20,4 +24,5 @@ ENV PATH /root/.composer/vendor/bin:$PATH
 
 WORKDIR /srv/www
 
-CMD ["bash", "/start.sh"]
+ENTRYPOINT ["dockerize", "-template", "/vhost.tmpl:/etc/nginx/conf.d/vhost.conf"]
+CMD ["sh", "/start.sh"]
