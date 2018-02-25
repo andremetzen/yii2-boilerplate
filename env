@@ -1,6 +1,5 @@
 VIRTUAL_HOST=yii2-boilerplate.docker
 DEFAULT_HOST=yii2-boilerplate.docker
-ANPCONT_DOMAIN=yii2-boilerplate.docker
 DB_HOST=db
 DB_NAME=yii2-boilerplate
 DB_USER=root
