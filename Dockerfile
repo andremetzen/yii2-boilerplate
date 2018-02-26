@@ -24,5 +24,8 @@ ENV PATH /root/.composer/vendor/bin:$PATH
 
 WORKDIR /srv/www
 
+VOLUME ["/srv/www"]
+VOLUME ["/etc/nginx/conf.d"]
+
 ENTRYPOINT ["dockerize", "-template", "/vhost.tmpl:/etc/nginx/conf.d/vhost.conf"]
 CMD ["sh", "/start.sh"]
