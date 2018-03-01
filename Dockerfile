@@ -1,5 +1,6 @@
 FROM jwilder/dockerize AS dockerize
 
+
 FROM andremetzen/alpine-php-fpm
 MAINTAINER Andre Metzen <metzen@conceptho.com>
 
