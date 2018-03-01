@@ -1,5 +1,6 @@
 FROM jwilder/dockerize AS dockerize
 
+
 FROM andremetzen/alpine-php-fpm
 MAINTAINER Andre Metzen <metzen@conceptho.com>
 
@@ -20,9 +21,15 @@ RUN composer --working-dir=/srv/www install --no-dev -v --prefer-dist && compose
 RUN composer --working-dir=/srv/www dumpautoload -o
 RUN chmod 0777 /srv/www/runtime /srv/www/web/assets
 
+ENV TZ=America/Sao_Paulo
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 ENV PATH /root/.composer/vendor/bin:$PATH
 
 WORKDIR /srv/www
+
+VOLUME ["/srv/www"]
+VOLUME ["/etc/nginx/conf.d"]
 
 ENTRYPOINT ["dockerize", "-template", "/vhost.tmpl:/etc/nginx/conf.d/vhost.conf"]
 CMD ["sh", "/start.sh"]
