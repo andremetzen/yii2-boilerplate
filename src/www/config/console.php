@@ -9,21 +9,16 @@ $config = [
     'controllerNamespace' => 'app\commands',
     'params' => $params,
     'components' => [],
-    /*
-    'controllerMap' => [
-        'fixture' => [ // Fixture generation command line.
-            'class' => 'yii\faker\FixtureController',
-        ],
-    ],
-    */
+	'controllerMap' => [
+		'migrate' => [
+			'class' => 'yii\console\controllers\MigrateController',
+			'templateFile' => '@app/migrations/Template.php',
+		],
+	],
 ];
 
 if (YII_ENV_DEV) {
-    // configuration adjustments for 'dev' environment
-    $config['bootstrap'][] = 'gii';
-    $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
-    ];
+    $config = yii\helpers\BaseArrayHelper::merge(require(__DIR__.'/dev.php'), $config);
 }
 
 return yii\helpers\BaseArrayHelper::merge(require(__DIR__.'/common.php'), $config);

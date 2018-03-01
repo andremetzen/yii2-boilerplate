@@ -1,6 +1,5 @@
 FROM jwilder/dockerize AS dockerize
 
-
 FROM andremetzen/alpine-php-fpm
 MAINTAINER Andre Metzen <metzen@conceptho.com>
 
@@ -28,8 +27,8 @@ ENV PATH /root/.composer/vendor/bin:$PATH
 
 WORKDIR /srv/www
 
-VOLUME ["/srv/www"]
 VOLUME ["/etc/nginx/conf.d"]
+VOLUME ["/srv/www"]
 
 ENTRYPOINT ["dockerize", "-template", "/vhost.tmpl:/etc/nginx/conf.d/vhost.conf"]
 CMD ["sh", "/start.sh"]
